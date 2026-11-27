@@ -1,76 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TuneBoard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TuneBoard - 音楽・ゲーム交流掲示板</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+  <!-- ヘッダー -->
+  <header>
+    <h1>TuneBoard</h1>
+    <p>音楽・ゲーム交流掲示板</p>
+  </header>
 
-        body{
-            font-family:Arial, sans-serif;
-            background:#f4f6fb;
-        }
+  <main>
+    <!-- カテゴリ絞り込み & 新規投稿ボタン -->
+    <section>
+      <div>
+        <button type="button" data-filter="all">すべて</button>
+        <button type="button" data-filter="音楽">音楽</button>
+        <button type="button" data-filter="ゲーム">ゲーム</button>
+      </div>
+      <button type="button" id="openModalBtn">新規投稿</button>
+    </section>
 
-        header{
-            background:linear-gradient(135deg,#7b61ff,#4facfe);
-            color:white;
-            text-align:center;
-            padding:30px;
-        }
+    <!-- 投稿一覧 -->
+    <section id="postList">
+      {% for message in messages %}
+      <article data-category="{{ message.category }}">
+        <div>
+          <span>[{{ message.category }}]</span>
+        </div>
+        <h2>{{ message.title }}</h2>
+        <p>{{ message.text }}</p>
+        <p>投稿者：{{ message.name }}｜{{ message.posted_at }}</p>
+      </article>
+      {% else %}
+      <p>まだ投稿はありません。</p>
+      {% endfor %}
+    </section>
+  </main>
 
-        .container{
-            width:90%;
-            max-width:900px;
-            margin:20px auto;
-        }
+  <!-- 新規投稿フォーム -->
+  <section id="postModal">
+    <h2>新しい投稿を作成</h2>
+    <form id="postForm" action="{{ url_for('post') }}" method="post">
+      <div>
+        <label for="name">投稿者名</label>
+        <input type="text" id="name" name="name" placeholder="名無し">
+      </div>
 
-        .form-box{
-            background:white;
-            padding:20px;
-            border-radius:15px;
-            margin-bottom:20px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.1);
-        }
+      <div>
+        <label for="category">カテゴリ</label>
+        <select id="category" name="category" required>
+          <option value="音楽">音楽</option>
+          <option value="ゲーム">ゲーム</option>
+        </select>
+      </div>
 
-        input,
-        select,
-        textarea{
-            width:100%;
-            padding:10px;
-            margin:10px 0;
-            border:1px solid #ddd;
-            border-radius:8px;
-        }
+      <div>
+        <label for="title">タイトル</label>
+        <input type="text" id="title" name="title" required>
+      </div>
 
-        button{
-            background:#4facfe;
-            color:white;
-            border:none;
-            padding:10px 18px;
-            border-radius:8px;
-            cursor:pointer;
-        }
+      <div>
+        <label for="message">本文</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
 
-        button:hover{
-            background:#3697fa;
-        }
+      <div>
+        <button type="button" id="closeModalBtn">キャンセル</button>
+        <button type="submit">投稿する</button>
+      </div>
+    </form>
+  </section>
 
-        .post{
-            background:white;
-            padding:20px;
-            margin-bottom:15px;
-            border-radius:15px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .music{
-            display:inline-block;
-            background:#ff4f9a;
-            color:white;
-            
+  <script src="{{ url_for('javascript_files', filename='app.js') }}"></script>
+</body>
+</html>

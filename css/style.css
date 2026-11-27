@@ -1,0 +1,269 @@
+/* 全体のリセットと基本フォント */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background-color: #f4f6f9;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* ヘッダー */
+header {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: #ffffff;
+  text-align: center;
+  padding: 24px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+header p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* メインコンテンツ枠 */
+main {
+  max-width: 720px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* カテゴリ絞り込み & 新規投稿ボタンのエリア */
+main > section:first-of-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+main > section:first-of-type > div {
+  display: flex;
+  gap: 8px;
+}
+
+/* 絞り込みボタン */
+button[data-filter] {
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button[data-filter]:hover,
+button[data-filter].active {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border-color: #4f46e5;
+  font-weight: bold;
+}
+
+/* 新規投稿ボタン */
+#openModalBtn {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+  transition: 0.2s;
+}
+
+#openModalBtn:hover {
+  background-color: #4338ca;
+}
+
+/* 投稿一覧 */
+#postList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 投稿がまだない場合のメッセージ */
+#postList > p {
+  text-align: center;
+  color: #6b7280;
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 各投稿カード */
+#postList article {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s;
+}
+
+#postList article:hover {
+  transform: translateY(-2px);
+}
+
+/* カテゴリバッジのエリア */
+#postList article > div:first-of-type {
+  margin-bottom: 10px;
+}
+
+#postList article > div:first-of-type span {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+/* カテゴリ別の色分け */
+article[data-category="音楽"] > div:first-of-type span {
+  background-color: #fce7f3;
+  color: #db2777;
+}
+
+article[data-category="ゲーム"] > div:first-of-type span {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+/* 投稿タイトル */
+#postList article h2 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+/* 投稿本文（1つ目のpタグ） */
+#postList article p:first-of-type {
+  color: #374151;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  margin-bottom: 14px;
+}
+
+/* 投稿者名と日時（最後のpタグ） */
+#postList article p:last-of-type {
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-align: right;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 10px;
+}
+
+/* 新規投稿フォーム（モーダル表示） */
+#postModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000;
+  padding: 16px;
+}
+
+#postModal.open {
+  display: flex;
+}
+
+#postModal h2,
+#postModal form {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 500px;
+}
+
+#postModal h2 {
+  padding: 24px 24px 12px;
+  border-radius: 12px 12px 0 0;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #4f46e5;
+}
+
+#postModal form {
+  padding: 16px 24px 24px;
+  border-radius: 0 0 12px 12px;
+}
+
+#postModal form > div {
+  margin-bottom: 16px;
+}
+
+#postModal label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+#postModal input[type="text"],
+#postModal select,
+#postModal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+#postModal textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* フォームの送信・キャンセルボタン */
+#postModal form > div:last-of-type {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+#closeModalBtn {
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#postModal button[type="submit"] {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
